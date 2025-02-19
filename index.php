@@ -65,8 +65,7 @@
                 <td>
                     <a href = "edit-author.php?id=<?= $author['authID']?>">Edit</a>
                     |
-                    <a href = "includes/delete-author.inc.php" onclick= "confirm('Are you Sure you want to delete this author?') ?
-                    window.loacation.href = 'includes/delete-author.inc.php?id=<?$author['authID']?>':'">Delete</a>
+                    <a href = "#" onclick="confirm('Are you Sure you want to delete this author?') ? window.location.href = 'includes/delete-author.inc.php?id=<?= $author['authID'] ?>' : ''">Delete</a>
                 <td>
             </tr>
             <?php endforeach;?>
