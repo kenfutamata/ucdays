@@ -1,3 +1,20 @@
+<?php
+
+    $id = $_GET['id']; 
+
+    require_once "includes/dbc.inc.php"; 
+    try{    
+        $query = "SELECT * FROM authors WHERE authID = :id;"; 
+        $stmt = $pdo->prepare($query); 
+        $stmt-> bindParam(":id", $id); 
+        $stmt -> execute(); 
+
+        $author  = $stmt->fetch(PDO::FETCH_ASSOC); 
+    }catch(PDOException $e){
+        die("Query Failed: ".$e->getMessage());
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,16 +58,16 @@
                 <form method="post" action="includes/edit-author.inc.php">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">Firstname</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname">
+                        <input type="text" class="form-control" id="firstname" name="firstname" value = "<?= $author['authFName']?>">
                     </div>
                     <div class="mb-3">
                         <label for="middlename" class="form-label">Middlename</label>
-                        <input type="text" class="form-control" id="middlename" name="middlename">
+                        <input type="text" class="form-control" id="middlename" name="middlename"  value = "<?= $author['authMName']?>">
                     </div>
                     <div class="mb-3">
                         <label for="lastname" class="form-label">Lastname</label>
-                        <input type="text" class="form-control" id="lastname" name="lastname">
-                        <input type="hidden" name="id">
+                        <input type="text" class="form-control" id="lastname" name="lastname"  value = "<?= $author['authLName']?>">
+                        <input type="hidden" name="id" value = "<?= $author['authID']?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

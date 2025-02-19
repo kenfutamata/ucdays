@@ -1,3 +1,16 @@
+<?php
+
+    require_once "includes/dbc.inc.php"; 
+    try{    
+        $query = "SELECT * FROM authors"; 
+        $stmt = $pdo->prepare($query); 
+        $stmt -> execute(); 
+
+        $authors  = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }catch(PDOException $e){
+        die("Query Failed: ".$e->getMessage());
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +56,20 @@
                 <th>Lastname</th>
                 <th>Action</th>
             </tr>
+            <?php foreach ($authors as $author):?>
+                <tr>
+                <td><?= $author['authID']?></td>
+                <td><?= $author['authFName']?></td>
+                <td><?= $author['authMName']?></td>
+                <td><?= $author['authLName']?></td>
+                <td>
+                    <a href = "edit-author.php?id=<?= $author['authID']?>">Edit</a>
+                    |
+                    <a href = "includes/delete-author.inc.php" onclick= "confirm('Are you Sure you want to delete this author?') ?
+                    window.loacation.href = 'includes/delete-author.inc.php?id=<?$author['authID']?>':'">Delete</a>
+                <td>
+            </tr>
+            <?php endforeach;?>
         </table>
     </div>
 </body>
